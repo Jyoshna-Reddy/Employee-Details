@@ -17,16 +17,16 @@ const createEmployee = async (event) => {
         // Parse input data from event (e.g., event.body)
         const body = JSON.parse(event.body);
 
-        if (!body.EmployeeID) {
-          response.statusCode = 400; // Bad request
-          response.body = JSON.stringify({
-              message: 'EmployeeID is required in the input data.',
-          });
-          return response;
-      }
+      //   if (!body.EmployeeID) {
+      //     response.statusCode = 400; // Bad request
+      //     response.body = JSON.stringify({
+      //         message: 'EmployeeID is required in the input data.',
+      //     });
+      //     return response;
+      // }
 
         // Generate a unique Employee ID
-        // const employeeID = body.EmployeeID();
+        const employeeID = generateEmployeeID();
 
         // Construct the PutItemCommand to insert the employee record into DynamoDB
         const params = {
