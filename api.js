@@ -94,27 +94,28 @@ const updateSalary = async (event) => {
     const params = {
       TableName: process.env.DYNAMODB_TABLE_NAME,
       Key: marshall({ EmployeeID: body.EmployeeID }),
-      UpdateExpression: 'SET Salary = :newSalary',
-      ExpressionAttributeValues: marshall({ 
-        EmployeeID: employeeID,
-        Address: body.Address,
-        Phone: body.Phone,
-        PersonalEmail: body.PersonalEmail,
-        EmergencyContactPersonName: body.EmergencyContactPersonName,
-        EmergencyContactPersonPhone: body.EmergencyContactPersonPhone, }),
+      UpdateExpression:
+        'SET Address = :address, Phone = :phone, PersonalEmail = :personalEmail, EmergencyContactPersonName = :emergencyContactName, EmergencyContactPersonPhone = :emergencyContactPhone',
+      ExpressionAttributeValues: marshall({
+        ':address': body.Address,
+        ':phone': body.Phone,
+        ':personalEmail': body.PersonalEmail,
+        ':emergencyContactName': body.EmergencyContactPersonName,
+        ':emergencyContactPhone': body.EmergencyContactPersonPhone,
+      }),
     };
 
     // Send the UpdateItemCommand
     await client.send(new UpdateItemCommand(params));
 
     response.body = JSON.stringify({
-      message: 'Successfully updated employee salary.',
+      message: 'Successfully updated employee details.',
     });
   } catch (e) {
     console.error(e);
     response.statusCode = 500;
     response.body = JSON.stringify({
-      message: 'Failed to update employee salary.',
+      message: 'Failed to update employee details.',
       errorMsg: e.message,
     });
   }
