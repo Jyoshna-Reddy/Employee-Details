@@ -168,9 +168,9 @@ const updateSalary = async (event) => {
 // };
 
 module.exports = {
-    createEmployee,
-    listEmployees,
+    // createEmployee,
+    // listEmployees,
     updateSalary,
-    deleteEmployee,
-    getEmployee,
+    // deleteEmployee,
+    // getEmployee,
 };
