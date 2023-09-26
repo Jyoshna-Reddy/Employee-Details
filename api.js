@@ -26,7 +26,7 @@ const createEmployee = async (event) => {
       }
 
         // Generate a unique Employee ID
-        const employeeID = body.EmployeeID();
+        // const employeeID = body.EmployeeID();
 
         // Construct the PutItemCommand to insert the employee record into DynamoDB
         const params = {
@@ -182,5 +182,5 @@ module.exports = {
     listEmployees,
     updateSalary,
     // deleteEmployee,
-    // getEmployee,
+    getEmployee,
 };
