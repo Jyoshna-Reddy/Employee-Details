@@ -139,8 +139,8 @@ functions:
         Action:
           - "dynamodb:PutItem"
         Resource: !GetAtt EmployeeTable.Arn
-  updateContacts:
-    handler: api.updateContacts
+  updateSalary:
+    handler: api.updateSalary
     name: update-salary
     memorySize: 128 # mb
     timeout: 5 # seconds

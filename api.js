@@ -84,7 +84,7 @@ const listEmployees = async () => {
 };
 
 // 3. Update Salary
-const updateContacts = async (event) => {
+const updateSalary = async (event) => {
   const response = { statusCode: 200 };
   try {
     // Parse input data from event (e.g., event.body)
@@ -185,7 +185,7 @@ const getEmployee = async (event) => {
 module.exports = {
   createEmployee,
   listEmployees,
-  updateContacts,
+  updateSalary,
   // deleteEmployee,
   getEmployee,
 };
