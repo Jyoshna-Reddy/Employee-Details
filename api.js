@@ -6,48 +6,50 @@ const { marshall, unmarshall } = require('@aws-sdk/util-dynamodb');
 const client = new DynamoDBClient();
 
 // Helper function to generate a unique Employee ID
-function generateEmployeeID() {
-    return Math.random().toString(36).substring(2, 10);
-}
+// function generateEmployeeID() {
+//     return Math.random().toString(36).substring(2, 10);
+// }
 
-// // 1. Create Employee
-// const createEmployee = async (event) => {
-//     const response = { statusCode: 200 };
-//     try {
-//         // Parse input data from event (e.g., event.body)
-//         const body = JSON.parse(event.body);
+// 1. Create Employee
+const createEmployee = async (event) => {
+    const response = { statusCode: 200 };
+    try {
+        // Parse input data from event (e.g., event.body)
+        const body = JSON.parse(event.body);
 
-//         // Generate a unique Employee ID
-//         const employeeID = generateEmployeeID();
+        // Generate a unique Employee ID
+        const employeeID = EmployeeID();
 
-//         // Construct the PutItemCommand to insert the employee record into DynamoDB
-//         const params = {
-//             TableName: process.env.DYNAMODB_TABLE_NAME,
-//             Item: marshall({
-//                 EmployeeID: employeeID,
-//                 EmployeeName: body.EmployeeName,
-//                 Salary: body.Salary,
-//                 // Add other fields as needed
-//             }),
-//         };
+        // Construct the PutItemCommand to insert the employee record into DynamoDB
+        const params = {
+            TableName: process.env.DYNAMODB_TABLE_NAME,
+            Item: marshall({
+                EmployeeID: employeeID,
+                Address: body.Address,
+                Phone: body.Phone,
+                PersonalEmail:body.PersonalEmail,
+                EmergencyContactPersonName: body.EmergencyContactPersonName,
+                EmergencyContactPersonPhone: body.EmergencyContactPersonPhone
+            }),
+        };
 
-//         // Send the PutItemCommand
-//         await client.send(new PutItemCommand(params));
+        // Send the PutItemCommand
+        await client.send(new PutItemCommand(params));
 
-//         response.body = JSON.stringify({
-//             message: 'Successfully created employee.',
-//             EmployeeID: employeeID,
-//         });
-//     } catch (e) {
-//         console.error(e);
-//         response.statusCode = 500;
-//         response.body = JSON.stringify({
-//             message: 'Failed to create employee.',
-//             errorMsg: e.message,
-//         });
-//     }
-//     return response;
-// };
+        response.body = JSON.stringify({
+            message: 'Successfully created employee.',
+            EmployeeID: employeeID,
+        });
+    } catch (e) {
+        console.error(e);
+        response.statusCode = 500;
+        response.body = JSON.stringify({
+            message: 'Failed to create employee.',
+            errorMsg: e.message,
+        });
+    }
+    return response;
+};
 
 // // 2. List Employees
 // const listEmployees = async () => {
@@ -168,7 +170,7 @@ const updateSalary = async (event) => {
 // };
 
 module.exports = {
-    // createEmployee,
+    createEmployee,
     // listEmployees,
     updateSalary,
     // deleteEmployee,
