@@ -18,7 +18,7 @@ const createEmployee = async (event) => {
         const body = JSON.parse(event.body);
 
         // Generate a unique Employee ID
-        const employeeID = EmployeeID();
+        const employeeID = body.EmployeeID();
 
         // Construct the PutItemCommand to insert the employee record into DynamoDB
         const params = {
