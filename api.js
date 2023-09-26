@@ -146,36 +146,36 @@ const updateSalary = async (event) => {
 //     return response;
 // };
 
-// // 5. Get Employee by ID
-// const getEmployee = async (event) => {
-//     const response = { statusCode: 200 };
-//     try {
-//         // Parse input data from event (e.g., event.pathParameters)
-//         const { EmployeeID } = event.pathParameters;
+// 5. Get Employee by ID
+const getEmployee = async (event) => {
+    const response = { statusCode: 200 };
+    try {
+        // Parse input data from event (e.g., event.pathParameters)
+        const { EmployeeID } = event.pathParameters;
 
-//         // Construct the GetItemCommand to retrieve the employee record from DynamoDB
-//         const params = {
-//             TableName: process.env.DYNAMODB_TABLE_NAME,
-//             Key: marshall({ EmployeeID }),
-//         };
+        // Construct the GetItemCommand to retrieve the employee record from DynamoDB
+        const params = {
+            TableName: process.env.DYNAMODB_TABLE_NAME,
+            Key: marshall({ EmployeeID }),
+        };
 
-//         // Send the GetItemCommand
-//         const { Item } = await client.send(new GetItemCommand(params));
+        // Send the GetItemCommand
+        const { Item } = await client.send(new GetItemCommand(params));
 
-//         response.body = JSON.stringify({
-//             message: 'Successfully retrieved employee.',
-//             employee: Item ? unmarshall(Item) : {},
-//         });
-//     } catch (e) {
-//         console.error(e);
-//         response.statusCode = 500;
-//         response.body = JSON.stringify({
-//             message: 'Failed to get employee.',
-//             errorMsg: e.message,
-//         });
-//     }
-//     return response;
-// };
+        response.body = JSON.stringify({
+            message: 'Successfully retrieved employee.',
+            employee: Item ? unmarshall(Item) : {},
+        });
+    } catch (e) {
+        console.error(e);
+        response.statusCode = 500;
+        response.body = JSON.stringify({
+            message: 'Failed to get employee.',
+            errorMsg: e.message,
+        });
+    }
+    return response;
+};
 
 module.exports = {
     createEmployee,

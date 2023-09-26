@@ -167,20 +167,20 @@ functions:
   #       Action:
   #         - "dynamodb:DeleteItem"
   #       Resource: !GetAtt EmployeeTable.Arn
-  # listEmployees:
-  #   handler: api.listEmployees
-  #   name: list-employees
-  #   memorySize: 128 # mb
-  #   timeout: 5 # seconds
-  #   events:
-  #     - http:
-  #         path: employees
-  #         method: GET
-  #   iamRoleStatements:
-  #     - Effect: "Allow"
-  #       Action:
-  #         - "dynamodb:Scan"
-  #       Resource: !GetAtt EmployeeTable.Arn
+  listEmployees:
+    handler: api.listEmployees
+    name: list-employees
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: employees
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+        Resource: !GetAtt EmployeeTable.Arn
 resources:
   Resources:
     EmployeeTable:
