@@ -84,7 +84,7 @@ const listEmployees = async () => {
 };
 
 // 3. Update Salary
-const updateSalary = async (event) => {
+const updateContacts = async (event) => {
   const response = { statusCode: 200 };
   try {
     // Parse input data from event (e.g., event.body)
@@ -95,7 +95,13 @@ const updateSalary = async (event) => {
       TableName: process.env.DYNAMODB_TABLE_NAME,
       Key: marshall({ EmployeeID: body.EmployeeID }),
       UpdateExpression: 'SET Salary = :newSalary',
-      ExpressionAttributeValues: marshall({ ':newSalary': body.Salary }),
+      ExpressionAttributeValues: marshall({ 
+        EmployeeID: employeeID,
+        Address: body.Address,
+        Phone: body.Phone,
+        PersonalEmail: body.PersonalEmail,
+        EmergencyContactPersonName: body.EmergencyContactPersonName,
+        EmergencyContactPersonPhone: body.EmergencyContactPersonPhone, }),
     };
 
     // Send the UpdateItemCommand
@@ -179,7 +185,7 @@ const getEmployee = async (event) => {
 module.exports = {
   createEmployee,
   listEmployees,
-  updateSalary,
+  updateContacts,
   // deleteEmployee,
   getEmployee,
 };
