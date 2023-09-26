@@ -111,34 +111,34 @@ custom:
 plugins:
   - serverless-iam-roles-per-function
 functions:
-  # getEmployee:
-  #   handler: api.getEmployee
-  #   name: get-employee
-  #   memorySize: 128 # mb
-  #   timeout: 5 # seconds
-  #   events:
-  #     - http:
-  #         path: employee/{employeeId}
-  #         method: GET
-  #   iamRoleStatements:
-  #     - Effect: "Allow"
-  #       Action:
-  #         - "dynamodb:GetItem"
-  #       Resource: !GetAtt EmployeeTable.Arn
-  # createEmployee:
-  #   handler: api.createEmployee
-  #   name: create-employee
-  #   memorySize: 128 # mb
-  #   timeout: 5 # seconds
-  #   events:
-  #     - http:
-  #         path: employee
-  #         method: POST
-  #   iamRoleStatements:
-  #     - Effect: "Allow"
-  #       Action:
-  #         - "dynamodb:PutItem"
-  #       Resource: !GetAtt EmployeeTable.Arn
+  getEmployee:
+    handler: api.getEmployee
+    name: get-employee
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: employee/{employeeId}
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:GetItem"
+        Resource: !GetAtt EmployeeTable.Arn
+  createEmployee:
+    handler: api.createEmployee
+    name: create-employee
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: employee
+          method: POST
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt EmployeeTable.Arn
   updateSalary:
     handler: api.updateSalary
     name: update-salary

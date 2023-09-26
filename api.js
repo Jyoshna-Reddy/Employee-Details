@@ -51,30 +51,30 @@ const createEmployee = async (event) => {
     return response;
 };
 
-// // 2. List Employees
-// const listEmployees = async () => {
-//     const response = { statusCode: 200 };
-//     try {
-//         // Use the ScanCommand to retrieve all records from DynamoDB
-//         const { Items } = await client.send(new ScanCommand({ TableName: process.env.DYNAMODB_TABLE_NAME }));
+// 2. List Employees
+const listEmployees = async () => {
+    const response = { statusCode: 200 };
+    try {
+        // Use the ScanCommand to retrieve all records from DynamoDB
+        const { Items } = await client.send(new ScanCommand({ TableName: process.env.DYNAMODB_TABLE_NAME }));
 
-//         // Extract employee names and salaries
-//         const employees = Items.map((item) => unmarshall(item));
+        // Extract employee names and salaries
+        const employees = Items.map((item) => unmarshall(item));
 
-//         response.body = JSON.stringify({
-//             message: 'Successfully retrieved all employees.',
-//             employees: employees,
-//         });
-//     } catch (e) {
-//         console.error(e);
-//         response.statusCode = 500;
-//         response.body = JSON.stringify({
-//             message: 'Failed to retrieve employees.',
-//             errorMsg: e.message,
-//         });
-//     }
-//     return response;
-// };
+        response.body = JSON.stringify({
+            message: 'Successfully retrieved all employees.',
+            employees: employees,
+        });
+    } catch (e) {
+        console.error(e);
+        response.statusCode = 500;
+        response.body = JSON.stringify({
+            message: 'Failed to retrieve employees.',
+            errorMsg: e.message,
+        });
+    }
+    return response;
+};
 
 // 3. Update Salary
 const updateSalary = async (event) => {
@@ -171,7 +171,7 @@ const updateSalary = async (event) => {
 
 module.exports = {
     createEmployee,
-    // listEmployees,
+    listEmployees,
     updateSalary,
     // deleteEmployee,
     // getEmployee,
