@@ -12,11 +12,11 @@ const {
     try {
       // Parse input data from event (e.g., event.body)
       const body = JSON.parse(event.body);
-      const employeeId = event.pathParameters.employeeId;
+      const EmployeeID = event.pathParameters.EmployeeID;
       // Construct the UpdateItemCommand to update the Salary in DynamoDB
       const params = {
         TableName: process.env.DYNAMODB_TABLE_NAME,
-        Key: marshall({ employeeId }),
+        Key: marshall({ EmployeeID }),
         UpdateExpression: 'SET #address = :address, #phone = :phone, #personalEmail = :personalEmail, #emergencyContactName = :emergencyContactName, #emergencyContactPhone = :emergencyContactPhone',
       ExpressionAttributeNames: {
         '#address': 'Address',
