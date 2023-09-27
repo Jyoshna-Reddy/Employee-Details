@@ -17,20 +17,20 @@ const {
       const params = {
         TableName: process.env.DYNAMODB_TABLE_NAME,
         Key: marshall({ EmployeeID }),
-        UpdateExpression: 'SET #address = :address, #phone = :phone, #personalEmail = :personalEmail, #emergencyContactName = :emergencyContactName, #emergencyContactPhone = :emergencyContactPhone',
+        UpdateExpression: 'SET #address = :address, #phone = :phone, #personalEmail = :personalEmail, #EmergencyContactPersonName = :EmergencyContactPersonName, #EmergencyContactPersonPhone = :EmergencyContactPersonPhone',
       ExpressionAttributeNames: {
         '#address': 'Address',
         '#phone': 'Phone',
         '#personalEmail': 'PersonalEmail',
-        '#emergencyContactName': 'EmergencyContactPersonName',
-        '#emergencyContactPhone': 'EmergencyContactPersonPhone',
+        '#EmergencyContactPersonName': 'EmergencyContactPersonName',
+        '#EmergencyContactPersonPhone': 'EmergencyContactPersonPhone',
       },
       ExpressionAttributeValues: marshall({
         ':address': body.Address,
         ':phone': body.Phone,
         ':personalEmail': body.PersonalEmail,
-        ':emergencyContactName': body.EmergencyContactPersonName,
-        ':emergencyContactPhone': body.EmergencyContactPersonPhone,
+        ':EmergencyContactPersonName': body.EmergencyContactPersonName,
+        ':EmergencyContactPersonPhone': body.EmergencyContactPersonPhone,
         }),
       };
   
