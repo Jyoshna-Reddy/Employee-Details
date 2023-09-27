@@ -1,7 +1,6 @@
 const {
     DynamoDBClient,
     UpdateItemCommand,
-    GetItemCommand,
   } = require('@aws-sdk/client-dynamodb');
   const { marshall, unmarshall } = require('@aws-sdk/util-dynamodb');
   
@@ -17,14 +16,8 @@ const {
       const params = {
         TableName: process.env.DYNAMODB_TABLE_NAME,
         Key: marshall({ EmployeeID }),
-        UpdateExpression: 'SET #address = :address, #phone = :phone, #personalEmail = :personalEmail, #EmergencyContactPersonName = :EmergencyContactPersonName, #EmergencyContactPersonPhone = :EmergencyContactPersonPhone',
-      ExpressionAttributeNames: {
-        '#address': 'Address',
-        '#phone': 'Phone',
-        '#personalEmail': 'PersonalEmail',
-        '#EmergencyContactPersonName': 'EmergencyContactPersonName',
-        '#EmergencyContactPersonPhone': 'EmergencyContactPersonPhone',
-      },
+        UpdateExpression:
+        'SET Address = :address, Phone = :phone, PersonalEmail = :personalEmail, EmergencyContactPersonName = :EmergencyContactPersonName, EmergencyContactPersonPhone = :EmergencyContactPersonPhone',
       ExpressionAttributeValues: marshall({
         ':address': body.Address,
         ':phone': body.Phone,
