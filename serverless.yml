@@ -108,7 +108,8 @@ provider:
     DYNAMODB_TABLE_NAME: ${self:custom.employeeTableName}
 custom:
   employeeTableName: employee-contact-table
-   - serverless-iam-roles-per-function
+plugins:
+  - serverless-iam-roles-per-function
 functions:
   # getEmployee:
   #   handler: api.getEmployee
