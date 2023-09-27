@@ -111,42 +111,42 @@ custom:
 plugins:
   - serverless-iam-roles-per-function
 functions:
-  getEmployee:
-    handler: api.getEmployee
-    name: get-employee
+  # getEmployee:
+  #   handler: api.getEmployee
+  #   name: get-employee
+  #   memorySize: 128 # mb
+  #   timeout: 5 # seconds
+  #   events:
+  #     - http:
+  #         path: employee/{employeeId}
+  #         method: GET
+  #   iamRoleStatements:
+  #     - Effect: "Allow"
+  #       Action:
+  #         - "dynamodb:GetItem"
+  #       Resource: !GetAtt EmployeeTable.Arn
+  # createEmployee:
+  #   handler: api.createEmployee
+  #   name: create-employee
+  #   memorySize: 128 # mb
+  #   timeout: 5 # seconds
+  #   events:
+  #     - http:
+  #         path: employee
+  #         method: POST
+  #   iamRoleStatements:
+  #     - Effect: "Allow"
+  #       Action:
+  #         - "dynamodb:PutItem"
+  #       Resource: !GetAtt EmployeeTable.Arn
+  updateContact:
+    handler: update.updateContact
+    name: update-contact
     memorySize: 128 # mb
     timeout: 5 # seconds
     events:
       - http:
-          path: employee/{employeeId}
-          method: GET
-    iamRoleStatements:
-      - Effect: "Allow"
-        Action:
-          - "dynamodb:GetItem"
-        Resource: !GetAtt EmployeeTable.Arn
-  createEmployee:
-    handler: api.createEmployee
-    name: create-employee
-    memorySize: 128 # mb
-    timeout: 5 # seconds
-    events:
-      - http:
-          path: employee
-          method: POST
-    iamRoleStatements:
-      - Effect: "Allow"
-        Action:
-          - "dynamodb:PutItem"
-        Resource: !GetAtt EmployeeTable.Arn
-  updateSalary:
-    handler: api.updateSalary
-    name: update-salary
-    memorySize: 128 # mb
-    timeout: 5 # seconds
-    events:
-      - http:
-          path: employee/{employeeId}
+          path: employee/contact/{employeeId}
           method: PUT
     iamRoleStatements:
       - Effect: "Allow"
@@ -167,20 +167,20 @@ functions:
   #       Action:
   #         - "dynamodb:DeleteItem"
   #       Resource: !GetAtt EmployeeTable.Arn
-  listEmployees:
-    handler: api.listEmployees
-    name: list-employees
-    memorySize: 128 # mb
-    timeout: 5 # seconds
-    events:
-      - http:
-          path: employees
-          method: GET
-    iamRoleStatements:
-      - Effect: "Allow"
-        Action:
-          - "dynamodb:Scan"
-        Resource: !GetAtt EmployeeTable.Arn
+  # listEmployees:
+  #   handler: api.listEmployees
+  #   name: list-employees
+  #   memorySize: 128 # mb
+  #   timeout: 5 # seconds
+  #   events:
+  #     - http:
+  #         path: employees
+  #         method: GET
+  #   iamRoleStatements:
+  #     - Effect: "Allow"
+  #       Action:
+  #         - "dynamodb:Scan"
+  #       Resource: !GetAtt EmployeeTable.Arn
 resources:
   Resources:
     EmployeeTable:
