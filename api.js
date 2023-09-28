@@ -1,192 +1,192 @@
-// const {
-//   DynamoDBClient,
-//   PutItemCommand,
-//   ScanCommand,
-//   UpdateItemCommand,
-//   DeleteItemCommand,
-//   GetItemCommand,
-// } = require('@aws-sdk/client-dynamodb');
-// const { marshall, unmarshall } = require('@aws-sdk/util-dynamodb');
+const {
+  DynamoDBClient,
+  PutItemCommand,
+  ScanCommand,
+  UpdateItemCommand,
+  DeleteItemCommand,
+  GetItemCommand,
+} = require('@aws-sdk/client-dynamodb');
+const { marshall, unmarshall } = require('@aws-sdk/util-dynamodb');
 
-// const client = new DynamoDBClient();
+const client = new DynamoDBClient();
 
-// // Helper function to generate a unique Employee ID
+// Helper function to generate a unique Employee ID
 // function generateEmployeeID() {
 //   return Math.random().toString(36).substring(2, 10);
 // }
 
-// // 1. Create Employee
-// const createEmployee = async (event) => {
-//   const response = { statusCode: 200 };
-//   try {
-//     // Parse input data from event (e.g., event.body)
-//     const body = JSON.parse(event.body);
+// 1. Create Employee
+const createEmployee = async (event) => {
+  const response = { statusCode: 200 };
+  try {
+    // Parse input data from event (e.g., event.body)
+    const body = JSON.parse(event.body);
 
-//     // Generate a unique Employee ID
-//     const employeeID = generateEmployeeID();
+    // Generate a unique Employee ID
+    const employeeID = generateEmployeeID();
 
-//     // Construct the PutItemCommand to insert the employee record into DynamoDB
-//     const params = {
-//       TableName: process.env.DYNAMODB_TABLE_NAME,
-//       Item: marshall({
-//         EmployeeID: employeeID,
-//         Address: body.Address,
-//         Phone: body.Phone,
-//         PersonalEmail: body.PersonalEmail,
-//         EmergencyContactPersonName: body.EmergencyContactPersonName,
-//         EmergencyContactPersonPhone: body.EmergencyContactPersonPhone,
-//       }),
-//     };
+    // Construct the PutItemCommand to insert the employee record into DynamoDB
+    const params = {
+      TableName: process.env.DYNAMODB_TABLE_NAME,
+      Item: marshall({
+        EmployeeID: employeeID,
+        Address: body.Address,
+        Phone: body.Phone,
+        PersonalEmail: body.PersonalEmail,
+        EmergencyContactPersonName: body.EmergencyContactPersonName,
+        EmergencyContactPersonPhone: body.EmergencyContactPersonPhone,
+      }),
+    };
 
-//     // Send the PutItemCommand
-//     await client.send(new PutItemCommand(params));
+    // Send the PutItemCommand
+    await client.send(new PutItemCommand(params));
 
-//     response.body = JSON.stringify({
-//       message: 'Successfully created employee.',
-//       EmployeeID: employeeID,
-//     });
-//   } catch (e) {
-//     console.error(e);
-//     response.statusCode = 500;
-//     response.body = JSON.stringify({
-//       message: 'Failed to create employee.',
-//       errorMsg: e.message,
-//     });
-//   }
-//   return response;
-// };
+    response.body = JSON.stringify({
+      message: 'Successfully created employee.',
+      EmployeeID: employeeID,
+    });
+  } catch (e) {
+    console.error(e);
+    response.statusCode = 500;
+    response.body = JSON.stringify({
+      message: 'Failed to create employee.',
+      errorMsg: e.message,
+    });
+  }
+  return response;
+};
 
-// // 2. List Employees
-// const listEmployees = async () => {
-//   const response = { statusCode: 200 };
-//   try {
-//     // Use the ScanCommand to retrieve all records from DynamoDB
-//     const { Items } = await client.send(
-//       new ScanCommand({ TableName: process.env.DYNAMODB_TABLE_NAME })
-//     );
+// 2. List Employees
+const listEmployees = async () => {
+  const response = { statusCode: 200 };
+  try {
+    // Use the ScanCommand to retrieve all records from DynamoDB
+    const { Items } = await client.send(
+      new ScanCommand({ TableName: process.env.DYNAMODB_TABLE_NAME })
+    );
 
-//     // Extract employee names and salaries
-//     const employees = Items.map((item) => unmarshall(item));
+    // Extract employee names and salaries
+    const employees = Items.map((item) => unmarshall(item));
 
-//     response.body = JSON.stringify({
-//       message: 'Successfully retrieved all employees.',
-//       employees: employees,
-//     });
-//   } catch (e) {
-//     console.error(e);
-//     response.statusCode = 500;
-//     response.body = JSON.stringify({
-//       message: 'Failed to retrieve employees.',
-//       errorMsg: e.message,
-//     });
-//   }
-//   return response;
-// };
+    response.body = JSON.stringify({
+      message: 'Successfully retrieved all employees.',
+      employees: employees,
+    });
+  } catch (e) {
+    console.error(e);
+    response.statusCode = 500;
+    response.body = JSON.stringify({
+      message: 'Failed to retrieve employees.',
+      errorMsg: e.message,
+    });
+  }
+  return response;
+};
 
-// // 3. Update Salary
-// const updateSalary = async (event) => {
-//   const response = { statusCode: 200 };
-//   try {
-//     // Parse input data from event (e.g., event.body)
-//     const body = JSON.parse(event.body);
+// 3. Update Salary
+const updateSalary = async (event) => {
+  const response = { statusCode: 200 };
+  try {
+    // Parse input data from event (e.g., event.body)
+    const body = JSON.parse(event.body);
 
-//     // Construct the UpdateItemCommand to update the Salary in DynamoDB
-//     const params = {
-//       TableName: process.env.DYNAMODB_TABLE_NAME,
-//       Key: marshall({ EmployeeID: body.EmployeeID }),
-//       UpdateExpression:
-//         'SET Address = :address, Phone = :phone, PersonalEmail = :personalEmail, EmergencyContactPersonName = :emergencyContactName, EmergencyContactPersonPhone = :emergencyContactPhone',
-//       ExpressionAttributeValues: marshall({
-//         ':address': body.Address,
-//         ':phone': body.Phone,
-//         ':personalEmail': body.PersonalEmail,
-//         ':emergencyContactName': body.EmergencyContactPersonName,
-//         ':emergencyContactPhone': body.EmergencyContactPersonPhone,
-//       }),
-//     };
+    // Construct the UpdateItemCommand to update the Salary in DynamoDB
+    const params = {
+      TableName: process.env.DYNAMODB_TABLE_NAME,
+      Key: marshall({ EmployeeID: body.EmployeeID }),
+      UpdateExpression:
+        'SET Address = :address, Phone = :phone, PersonalEmail = :personalEmail, EmergencyContactPersonName = :emergencyContactName, EmergencyContactPersonPhone = :emergencyContactPhone',
+      ExpressionAttributeValues: marshall({
+        ':address': body.Address,
+        ':phone': body.Phone,
+        ':personalEmail': body.PersonalEmail,
+        ':emergencyContactName': body.EmergencyContactPersonName,
+        ':emergencyContactPhone': body.EmergencyContactPersonPhone,
+      }),
+    };
 
-//     // Send the UpdateItemCommand
-//     await client.send(new UpdateItemCommand(params));
+    // Send the UpdateItemCommand
+    await client.send(new UpdateItemCommand(params));
 
-//     response.body = JSON.stringify({
-//       message: 'Successfully updated employee details.',
-//     });
-//   } catch (e) {
-//     console.error(e);
-//     response.statusCode = 500;
-//     response.body = JSON.stringify({
-//       message: 'Failed to update employee details.',
-//       errorMsg: e.message,
-//     });
-//   }
-//   return response;
-// };
+    response.body = JSON.stringify({
+      message: 'Successfully updated employee details.',
+    });
+  } catch (e) {
+    console.error(e);
+    response.statusCode = 500;
+    response.body = JSON.stringify({
+      message: 'Failed to update employee details.',
+      errorMsg: e.message,
+    });
+  }
+  return response;
+};
 
-// // 4. Delete Employee
-// // const deleteEmployee = async (event) => {
-// //     const response = { statusCode: 200 };
-// //     try {
-// //         // Parse input data from event (e.g., event.pathParameters)
-// //         const { EmployeeID } = event.pathParameters;
+// 4. Delete Employee
+const deleteEmployee = async (event) => {
+    const response = { statusCode: 200 };
+    try {
+        // Parse input data from event (e.g., event.pathParameters)
+        const { EmployeeID } = event.pathParameters;
 
-// //         // Construct the DeleteItemCommand to remove the employee record from DynamoDB
-// //         const params = {
-// //             TableName: process.env.DYNAMODB_TABLE_NAME,
-// //             Key: marshall({ EmployeeID }),
-// //         };
+        // Construct the DeleteItemCommand to remove the employee record from DynamoDB
+        const params = {
+            TableName: process.env.DYNAMODB_TABLE_NAME,
+            Key: marshall({ EmployeeID }),
+        };
 
-// //         // Send the DeleteItemCommand
-// //         await client.send(new DeleteItemCommand(params));
+        // Send the DeleteItemCommand
+        await client.send(new DeleteItemCommand(params));
 
-// //         response.body = JSON.stringify({
-// //             message: 'Successfully deleted employee.',
-// //         });
-// //     } catch (e) {
-// //         console.error(e);
-// //         response.statusCode = 500;
-// //         response.body = JSON.stringify({
-// //             message: 'Failed to delete employee.',
-// //             errorMsg: e.message,
-// //         });
-// //     }
-// //     return response;
-// // };
+        response.body = JSON.stringify({
+            message: 'Successfully deleted employee.',
+        });
+    } catch (e) {
+        console.error(e);
+        response.statusCode = 500;
+        response.body = JSON.stringify({
+            message: 'Failed to delete employee.',
+            errorMsg: e.message,
+        });
+    }
+    return response;
+};
 
-// // 5. Get Employee by ID
-// const getEmployee = async (event) => {
-//   const response = { statusCode: 200 };
-//   try {
-//     // Parse input data from event (e.g., event.pathParameters)
-//     const { EmployeeID } = event.pathParameters;
+// 5. Get Employee by ID
+const getEmployee = async (event) => {
+  const response = { statusCode: 200 };
+  try {
+    // Parse input data from event (e.g., event.pathParameters)
+    const { EmployeeID } = event.pathParameters;
 
-//     // Construct the GetItemCommand to retrieve the employee record from DynamoDB
-//     const params = {
-//       TableName: process.env.DYNAMODB_TABLE_NAME,
-//       Key: marshall({ EmployeeID }),
-//     };
+    // Construct the GetItemCommand to retrieve the employee record from DynamoDB
+    const params = {
+      TableName: process.env.DYNAMODB_TABLE_NAME,
+      Key: marshall({ EmployeeID }),
+    };
 
-//     // Send the GetItemCommand
-//     const { Item } = await client.send(new GetItemCommand(params));
+    // Send the GetItemCommand
+    const { Item } = await client.send(new GetItemCommand(params));
 
-//     response.body = JSON.stringify({
-//       message: 'Successfully retrieved employee.',
-//       employee: Item ? unmarshall(Item) : {},
-//     });
-//   } catch (e) {
-//     console.error(e);
-//     response.statusCode = 500;
-//     response.body = JSON.stringify({
-//       message: 'Failed to get employee.',
-//       errorMsg: e.message,
-//     });
-//   }
-//   return response;
-// };
+    response.body = JSON.stringify({
+      message: 'Successfully retrieved employee.',
+      employee: Item ? unmarshall(Item) : {},
+    });
+  } catch (e) {
+    console.error(e);
+    response.statusCode = 500;
+    response.body = JSON.stringify({
+      message: 'Failed to get employee.',
+      errorMsg: e.message,
+    });
+  }
+  return response;
+};
 
-// module.exports = {
-//   createEmployee,
-//   listEmployees,
-//   updateSalary,
-//   // deleteEmployee,
-//   getEmployee,
-// };
+module.exports = {
+  createEmployee,
+  listEmployees,
+  updateSalary,
+  deleteEmployee,
+  getEmployee,
+};
