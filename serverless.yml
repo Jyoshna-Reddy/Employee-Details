@@ -160,7 +160,7 @@ functions:
     timeout: 5 # seconds
     events:
       - http:
-          path: employee/{employeeId}
+          path: employeedelete/{employeeId}
           method: DELETE
     iamRoleStatements:
       - Effect: "Allow"
