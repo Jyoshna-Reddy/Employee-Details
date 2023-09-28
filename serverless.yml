@@ -98,7 +98,7 @@
 #           WriteCapacityUnits: 1
 
 
-service: employee-details-service # Change to your service name
+service: employee-details-delete-service # Change to your service name
 provider:
   name: aws
   runtime: nodejs14.x # Change to your desired Node.js runtime version
