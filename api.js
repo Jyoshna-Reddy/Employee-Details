@@ -124,32 +124,32 @@ const client = new DynamoDBClient();
 
 // 4. Delete Employee
 const deleteEmployee = async (event) => {
-  const response = { statusCode: 200 };
-  try {
-    // Parse input data from event (e.g., event.pathParameters)
-    const { employeeId } = event.pathParameters;
+    const response = { statusCode: 200 };
+    try {
+        // Parse input data from event (e.g., event.pathParameters)
+        const { EmployeeID } = event.pathParameters;
 
-    // Construct the DeleteItemCommand to remove the employee record from DynamoDB
-    const params = {
-      TableName: process.env.DYNAMODB_TABLE_NAME,
-      Key: marshall({ employeeId }),
-    };
+        // Construct the DeleteItemCommand to remove the employee record from DynamoDB
+        const params = {
+            TableName: process.env.DYNAMODB_TABLE_NAME,
+            Key: marshall({ EmployeeID }),
+        };
 
-    // Send the DeleteItemCommand
-    await client.send(new DeleteItemCommand(params));
+        // Send the DeleteItemCommand
+        await client.send(new DeleteItemCommand(params));
 
-    response.body = JSON.stringify({
-      message: 'Successfully deleted employee.',
-    });
-  } catch (e) {
-    console.error(e);
-    response.statusCode = 500;
-    response.body = JSON.stringify({
-      message: 'Failed to delete employee.',
-      errorMsg: e.message,
-    });
-  }
-  return response;
+        response.body = JSON.stringify({
+            message: 'Successfully deleted employee.',
+        });
+    } catch (e) {
+        console.error(e);
+        response.statusCode = 500;
+        response.body = JSON.stringify({
+            message: 'Failed to delete employee.',
+            errorMsg: e.message,
+        });
+    }
+    return response;
 };
 
 // 5. Get Employee by ID

@@ -160,7 +160,7 @@ functions:
     timeout: 5 # seconds
     events:
       - http:
-          path: employeedelete/{employeeId}
+          path: employee/{employeeId}
           method: DELETE
     iamRoleStatements:
       - Effect: "Allow"
@@ -188,10 +188,10 @@ resources:
       Properties:
         TableName: ${self:custom.employeeTableName}
         AttributeDefinitions:
-          - AttributeName: employeeId
+          - AttributeName: EmployeeID
             AttributeType: S
         KeySchema:
-          - AttributeName: employeeId
+          - AttributeName: EmployeeID
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
