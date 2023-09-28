@@ -107,7 +107,7 @@ provider:
   environment:
     DYNAMODB_TABLE_NAME: ${self:custom.employeeTableName}
 custom:
-  employeeTableName: employee-table-${self:provider.stage}
+  employeeTableName: employee-delete-table-${self:provider.stage}
 plugins:
   - serverless-iam-roles-per-function
 functions:
